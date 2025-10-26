@@ -6,8 +6,7 @@ const logSchema = new Schema(
         metadata: {
             url: String,
             user: {
-                type: Schema.Types.ObjectId,
-                ref: "User"
+                type: String,
             }
         },
         cacheHit: Boolean,
