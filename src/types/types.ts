@@ -1,5 +1,4 @@
 import type { Queue } from "bullmq";
-import { Types } from "mongoose";
 export interface ResponseObjectType {
     success: Boolean;
     message: String;
@@ -8,18 +7,19 @@ export interface ResponseObjectType {
 
 export interface RequestBodyType {
     email: String;
-    timestamp: Date;
+    timestamp: String;
     cacheHit: Boolean;
     roundTripTime: Number;
     responseStatusCode: Number;
     httpMethod: String;
+    url: String;
 }
 
 export interface LogSchema {
     timestamp: Date;
     metadata: {
         url: String;
-        user : Types.ObjectId;
+        user : String;
     };
     cacheHit: Boolean;
     roundTripTime: Number;
