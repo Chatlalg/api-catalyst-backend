@@ -7,8 +7,12 @@ export interface ResponseObjectType {
 }
 
 export interface RequestBodyType {
-    key: String;
-    value: any;
+    email: String;
+    timestamp: Date;
+    cacheHit: Boolean;
+    roundTripTime: Number;
+    responseStatusCode: Number;
+    httpMethod: String;
 }
 
 export interface LogSchema {
