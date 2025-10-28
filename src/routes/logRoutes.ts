@@ -1,9 +1,9 @@
 import express from "express"
-import { getUserLogs, insertLog } from "../controllers/logControllers.js";
+import { insertLog } from "../controllers/logControllers.js";
+import verifyUser from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.post("/insertLog", insertLog);
-router.get("/getUserLogs", getUserLogs)
+router.post("/insertLog", verifyUser, insertLog);
 
 export default router
