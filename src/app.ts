@@ -1,6 +1,6 @@
 import express from "express"
 import type { Request, Response } from "express";
-import type { ResponseObject } from "./types.js";
+import type { ResponseObjectType } from "./types/types.js";
 import logRoutes from "./routes/logRoutes.js"
 
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.urlencoded({
     extended: true,
 }));
 
-app.get("/", (req: Request, res: Response<ResponseObject>) => {
+app.get("/", (req: Request, res: Response<ResponseObjectType>) => {
     res.status(200).json({
         success: true,
         message: "Welcome to api catalyst backend!",
