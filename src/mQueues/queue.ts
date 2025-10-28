@@ -1,5 +1,6 @@
 import { Job, Queue } from 'bullmq';
 import { setupWorker } from './worker.js';
+import { ADDRGETNETWORKPARAMS } from 'dns';
 
 const PORT = process.env.REDIS_SOCKET_PORT || '6379';
 
@@ -12,6 +13,7 @@ export const logsMQ = new Queue('logsMQ', {
 });
 
 const DEFAULT_REMOVE_CONFIG = {
+    attempts:1,
     removeOnComplete: {
         age: 3600,
     },

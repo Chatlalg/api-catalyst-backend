@@ -17,12 +17,12 @@ export const setupWorker = async () => {
         }
     })
 
-    consumerProcess.on('completed', (job: Job, returnvalue: 'DONE') => {
-        console.debug(`Completed job with id ${job.id}`, returnvalue);
-    });
-    consumerProcess.on('active', (job: Job<unknown>) => {
+    consumerProcess.on('completed', (job: Job) => {
         console.debug(`Completed job with id ${job.id}`);
     });
+    consumerProcess.on('failed', (job: Job | undefined, error: Error) => {
+        console.debug("Failed to process job",error)
+    })
     consumerProcess.on('error', (failedReason: Error) => {
         console.error(`Job encountered an error`, failedReason);
     });
