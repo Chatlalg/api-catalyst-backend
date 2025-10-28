@@ -1,37 +1,27 @@
 import { Log } from "../models/Log.js";
 import type { Request, Response } from "express"
-import type { RequestBodyType, ResponseObjectType } from "../types.js";
+import type { RequestBodyType, ResponseObjectType } from "../types/types.js";
 import { addJobToQueue } from "../mQueues/queue.js";
 
-
-const getUserLogs = async (req: Request, res: Response<ResponseObjectType>) => {
-    const email = "user@gmail.com"
-    try {
-        const response = await Log.find({ "metadata.user": email });
-        res.status(200).json({
-            success: true,
-            message: `Successfully fetched logs of user: ${email}`,
-            payload: response
-        })
-    } catch (error) {
-        console.error(`Error fetching logs of user: ${email}`);
-        res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
-    }
-}
 
 const insertLog = async (req: Request, res: Response<ResponseObjectType>) => {
     try {
         const message: RequestBodyType = req.body;
-        const job = await addJobToQueue(message)
-        res.status(200).json({
-            success: true,
-            message: `Successfully inserted log with job id: ${job.id}`,
-        })
+        const job_name: String = req.user._id;
+        const job = await addJobToQueue<RequestBodyType>(job_name, message)
+        if (job) {
+            res.status(200).json({
+                success: true,
+                message: `Successfully inserted log`,
+            })
+        } else {
+            res.status(500).json({
+                success: false,
+                message: "Error inserting logs in queue"
+            })
+        }  
     } catch (error) {
-        console.error(`Error inserting log of user`);
+        console.error(error);
         res.status(500).json({
             success: false,
             message: "Internal server error"
@@ -39,4 +29,4 @@ const insertLog = async (req: Request, res: Response<ResponseObjectType>) => {
     }
 }
 
-export { getUserLogs, insertLog }
+export { insertLog }
