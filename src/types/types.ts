@@ -28,6 +28,7 @@ export interface LogSchema {
 }
 
 export interface UserSchema {
+    _id: String;
     email: String;
     api_key: String;
     config: {

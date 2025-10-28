@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import type { LogSchema } from "../types.js";
+import type { LogSchema } from "../types/types.js";
 
 const logSchema = new Schema<LogSchema>(
     {
