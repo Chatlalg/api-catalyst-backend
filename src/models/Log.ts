@@ -1,12 +1,14 @@
 import mongoose, { Schema } from "mongoose";
+import type { LogSchema } from "../types.js";
 
-const logSchema = new Schema(
+const logSchema = new Schema<LogSchema>(
     {
         timestamp: Date,
         metadata: {
             url: String,
             user: {
-                type: String,
+                type: Schema.Types.ObjectId,
+                ref:"User"
             }
         },
         cacheHit: Boolean,
@@ -23,4 +25,4 @@ const logSchema = new Schema(
     }
 )
 
-export const Log = mongoose.model("Log", logSchema)
+export const Log = mongoose.model<LogSchema>("Log", logSchema)
