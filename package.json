@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx -r dotenv/config --experimental-json-modules src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,12 +13,13 @@
   "devDependencies": {
     "@types/express": "^5.0.4",
     "@types/node": "^24.9.1",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bullmq": "^5.61.2",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "mongoose": "^8.19.2",
-    "tsx": "^4.20.6"
+    "mongoose": "^8.19.2"
   }
 }

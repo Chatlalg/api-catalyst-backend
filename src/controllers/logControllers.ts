@@ -1,8 +1,10 @@
 import { Log } from "../models/Log.js";
 import type { Request, Response } from "express"
-import type { ResponseObject } from "../types.js";
+import type { RequestBodyType, ResponseObjectType } from "../types.js";
+import { addJobToQueue } from "../mQueues/queue.js";
 
-const getUserLogs = async (req: Request, res: Response<ResponseObject>) => {
+
+const getUserLogs = async (req: Request, res: Response<ResponseObjectType>) => {
     const email = "user@gmail.com"
     try {
         const response = await Log.find({ "metadata.user": email });
@@ -20,27 +22,16 @@ const getUserLogs = async (req: Request, res: Response<ResponseObject>) => {
     }
 }
 
-const insertLog = async (req: Request, res: Response<ResponseObject>) => {
-    const dummyData = {
-        timestamp: new Date(),
-        metadata: {
-            url: "/api/weather",
-            user: "user@gmail.com"
-        },
-        cacheHit: true,
-        roundTripTime: 360,
-        responseStatusCode: 200,
-        httpMethod: "GET"
-    }
+const insertLog = async (req: Request, res: Response<ResponseObjectType>) => {
     try {
-        const response = await Log.insertOne(dummyData);
+        const message: RequestBodyType = req.body;
+        const job = await addJobToQueue(message)
         res.status(200).json({
             success: true,
-            message: `Successfully inserted log of user: ${dummyData.metadata.user}`,
+            message: `Successfully inserted log with job id: ${job.id}`,
         })
-        console.log(response)
     } catch (error) {
-        console.error(`Error inserting log of user: ${dummyData.metadata.user}`);
+        console.error(`Error inserting log of user`);
         res.status(500).json({
             success: false,
             message: "Internal server error"
