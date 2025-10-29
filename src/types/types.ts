@@ -1,39 +1,38 @@
 import type { Queue } from "bullmq";
 export interface ResponseObjectType {
-    success: Boolean;
-    message: String;
+    success: boolean;
+    message: string;
     payload?: any;
 }
 
 export interface RequestBodyType {
-    email: String;
-    timestamp: String;
-    cacheHit: Boolean;
-    roundTripTime: Number;
-    responseStatusCode: Number;
-    httpMethod: String;
-    url: String;
+    timestamp: string;
+    cacheHit: boolean;
+    roundTripTime: number;
+    responseStatusCode: number;
+    httpMethod: string;
+    url: string;
 }
 
 export interface LogSchema {
     timestamp: Date;
     metadata: {
-        url: String;
-        user : String;
+        url: string;
+        user : string;
     };
-    cacheHit: Boolean;
-    roundTripTime: Number;
-    responseStatusCode: Number;
-    httpMethod: String;
+    cacheHit: boolean;
+    roundTripTime: number;
+    responseStatusCode: number;
+    httpMethod: string;
 }
 
 export interface UserSchema {
-    _id: String;
-    email: String;
-    api_key: String;
+    _id: string;
+    email: string;
+    api_key: string;
     config: {
-        ttl: Number;
-        autoEviction: Boolean;
+        ttl: number;
+        autoEviction: boolean;
     };
 }
 

@@ -7,7 +7,7 @@ import { addJobToQueue } from "../mQueues/queue.js";
 const insertLog = async (req: Request, res: Response<ResponseObjectType>) => {
     try {
         const message: RequestBodyType = req.body;
-        const job_name: String = req.user._id;
+        const job_name: string = req.user._id;
         const job = await addJobToQueue<RequestBodyType>(job_name, message)
         if (job) {
             res.status(200).json({

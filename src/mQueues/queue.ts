@@ -22,7 +22,7 @@ const DEFAULT_REMOVE_CONFIG = {
     },
 };
 
-export async function addJobToQueue<T>(job_name:String,data: T): Promise<Job<T>> {
+export async function addJobToQueue<T>(job_name:string,data: T): Promise<Job<T>> {
     return logsMQ.add(`${job_name}`, data, DEFAULT_REMOVE_CONFIG);
 }
 

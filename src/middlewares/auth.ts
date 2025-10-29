@@ -4,17 +4,22 @@ import { User } from "../models/User.js";
 
 const verifyUser = async (req: Request, res: Response<ResponseObjectType>, next: NextFunction) => {
     try {
-        const key: String | String[] | undefined = req.headers?.key;
-        const message: RequestBodyType = req.body;
-        const email: String = message.email;
-        const user = await User.findOne({ email });
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized: Bearer token missing or invalid'
+            });
+        }
+        const token = authHeader.replace(/^Bearer\s+/, '')
+        const user = await User.findOne({ api_key: token });
         if (!user) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized user"
             });
         }
-        if (user.api_key === key) {
+        if (user.api_key === token) {
             req.user = user;
             return next();
         }
